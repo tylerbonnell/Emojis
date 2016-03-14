@@ -1,17 +1,13 @@
-$(function(){
+window.onload = function() {
   parseCSV();
-  $("#output").html("test");
-});
+  document.getElementById("output").innerHTML = "test";
+};
 
 function parseCSV() {
-  $.get("tags.csv", function(data) {
-    data.split("\n");
-    console.log(data[0]);
+  Papa.parse("http://bonn.pw/Emojis/tags.csv", {
+  	download: true,
+  	complete: function(results) {
+  		console.log(results);
+  	}
   });
-}
-
-function readTextFile(file) {
-    $.get(file, function(data) {
-        document.getElementById("FunText").innerHTML = "The text should show here: " + data;
-    });
 }
