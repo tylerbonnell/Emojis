@@ -10,7 +10,7 @@ window.onload = function() {
 // Fetch CSV file containing emojis/tags from the server
 // and parse it into the map for word lookup
 function parseCSV() {
-  Papa.parse("http://bonn.pw/Emojis/tags.csv", {
+  Papa.parse("https://docs.google.com/spreadsheets/d/1Ri4IhKQZFcyzt4dca87uvIqKURmN22t_e4pCBWBQL5s/pub?gid=0&single=true&output=csv", {
     skipEmptyLines: true,
   	download: true,
   	complete: function(results) {
@@ -27,6 +27,7 @@ function parseCSV() {
 // Maps the given word to the emoji. If the word already
 // maps to an emoji, adds it to the array
 function mapWordToEmoji(word, emoji) {
+  if (word.length == 0) return;
   if (word in words) {
     words[word].push(emoji);
   } else {
