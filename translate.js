@@ -47,5 +47,13 @@ function translate() {
 
 function translateRow(str) {
   var strWords = str.split(/\s+/);
-  return str;
+  var result = "";
+  for (var i = 0; i < strWords.length; i++) {
+    result += strWords[i] + " ";
+  }
+  return result;
+}
+
+function wordLookup() {
+  
 }
