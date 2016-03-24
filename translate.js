@@ -17,11 +17,20 @@ function parseCSV() {
   		for (var i = 0; i < results.data.length; i++) {
         var row = results.data[i];
         for (var j = 1; j < row.length; j++) {
-          mapWordToEmoji(row[j].toLowerCase(), row[0]);
+          mapWordToEmoji(standardize(row[j]), row[0]);
         }
       }
   	}
   });
+}
+
+// Makes words singular and lowercase
+function standardize(word) {
+  word = word.toLowerCase();
+  if (word[word.length - 1] == 's') {
+    word = word.substring(0, word.length - 1);
+  }
+  return word;
 }
 
 // Maps the given word to the emoji. If the word already
@@ -49,11 +58,30 @@ function translateRow(str) {
   var strWords = str.split(/\s+/);
   var result = "";
   for (var i = 0; i < strWords.length; i++) {
-    result += strWords[i] + " ";
+    if (strWords[i] in words) {
+      var beforeStr = randomString(words[strWords[i]]);
+      if (beforeStr.length > 0) beforeStr += " ";
+      var afterStr = randomString(words[strWords[i]]);
+      if (afterStr.length > 0) afterStr = " " + afterStr;
+      result += beforeStr + strWords[i] + afterStr + " ";
+    } else {
+      result += strWords[i] + " ";
+    }
   }
   return result;
 }
 
-function wordLookup() {
-  
+function randomString(arr) {
+  var str = "";
+  if (Math.random() > 0) {
+    var times = Math.ceil(Math.random() * 3);
+    for (var i = 0; i < times; i++) {
+      var index = Math.floor(Math.random() * arr.length);
+      var repeat = Math.floor(Math.random() * 2);
+      for (var j = 0; j < repeat; j++) {
+        str += arr[index];
+      }
+    }
+  }
+  return str;
 }
